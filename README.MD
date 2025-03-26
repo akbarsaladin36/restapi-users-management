@@ -53,11 +53,14 @@ DATABASE_NAME=<YOUR_DATABASE_NAME>
         3. Create User
         4. Update User
         5. Delete User
+    2. Profile API
+        1. Get Profile
+        2. Update Profile
 3. Users
-    1. Users API
-        1. Get User
-        2. Update User
-
+    1. Profile API
+        1. Get Profile
+        2. Update Profile
+    
 ## License
 
 © [Muhammad Akbar Saladin Siregar](https://github.com/akbarsaladin36/)
