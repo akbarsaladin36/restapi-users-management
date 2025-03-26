@@ -1,0 +1,535 @@
+basePath: /api/v1
+definitions:
+  inputs.CreateUserInput:
+    properties:
+      address:
+        type: string
+      email:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      password:
+        type: string
+      phoneNumber:
+        type: string
+      userRole:
+        type: string
+      username:
+        type: string
+    type: object
+  inputs.LoginInput:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  inputs.RegisterInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  inputs.UpdateUserInput:
+    properties:
+      address:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      phoneNumber:
+        type: string
+      userRole:
+        type: string
+    type: object
+  responses.LoginResponse:
+    properties:
+      user_role:
+        type: string
+      user_status_cd:
+        type: string
+      user_token:
+        type: string
+      user_username:
+        type: string
+      user_uuid:
+        type: string
+    type: object
+  responses.RegisterResponse:
+    properties:
+      user_created_date:
+        type: string
+      user_created_user_username:
+        type: string
+      user_created_user_uuid:
+        type: string
+      user_email:
+        type: string
+      user_role:
+        type: string
+      user_status_cd:
+        type: string
+      user_username:
+        type: string
+    type: object
+  responses.UserResponse:
+    properties:
+      user_address:
+        type: string
+      user_email:
+        type: string
+      user_first_name:
+        type: string
+      user_last_name:
+        type: string
+      user_password:
+        type: string
+      user_phone_number:
+        type: string
+      user_role:
+        type: string
+      user_username:
+        type: string
+    type: object
+host: localhost:8002
+info:
+  contact: {}
+  description: The API backend for personal project
+  title: Rest API - User Management
+  version: "1.0"
+paths:
+  /admin/profile:
+    get:
+      consumes:
+      - application/json
+      description: Get profile detail information by username
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get profile detail information
+      tags:
+      - profile
+    patch:
+      consumes:
+      - application/json
+      description: Updating profile detail information by username
+      parameters:
+      - description: update profile detail information for user
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/inputs.UpdateUserInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update profile detail information
+      tags:
+      - profile
+  /admin/users:
+    get:
+      consumes:
+      - application/json
+      description: Get all users for admin role
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get all users
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: registering a new user
+      parameters:
+      - description: Create a new user
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/inputs.CreateUserInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Create a new user
+      tags:
+      - users
+  /admin/users/detail-user/{user_username}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete user detail information by username
+      parameters:
+      - description: Username
+        in: path
+        name: user_username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Delete user detail information
+      tags:
+      - users
+    get:
+      consumes:
+      - application/json
+      description: Get user detail information by username
+      parameters:
+      - description: Username
+        in: path
+        name: user_username
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get user detail information
+      tags:
+      - users
+    patch:
+      consumes:
+      - application/json
+      description: Update user detail information from username as parameter
+      parameters:
+      - description: Username
+        in: path
+        name: user_username
+        required: true
+        type: string
+      - description: update existing user data
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/inputs.UpdateUserInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update existing user detail information
+      tags:
+      - users
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: authenticate user and get a token
+      parameters:
+      - description: Login credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/inputs.LoginInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.LoginResponse'
+        "302":
+          description: Found
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+      summary: User login
+      tags:
+      - auth
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user
+      parameters:
+      - description: Register credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/inputs.RegisterInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.RegisterResponse'
+        "302":
+          description: Found
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+      summary: User register
+      tags:
+      - auth
+  /user/profile:
+    get:
+      consumes:
+      - application/json
+      description: Get profile detail information by username
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get profile detail information
+      tags:
+      - profile
+    patch:
+      consumes:
+      - application/json
+      description: Updating profile detail information by username
+      parameters:
+      - description: update profile detail information for user
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/inputs.UpdateUserInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/responses.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            properties:
+              message:
+                type: string
+              status:
+                type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update profile detail information
+      tags:
+      - profile
+securityDefinitions:
+  BearerAuth:
+    description: Type "Bearer" followed by a space and JWT token
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
